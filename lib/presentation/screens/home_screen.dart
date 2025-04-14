@@ -21,6 +21,14 @@ class HomeScreen extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
             onTap: (){context.push("/bloc");},
           ),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
+          ListTile(
+            title: Text("New account"),
+            subtitle: Text("Form with validation and bloc."),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            onTap: (){context.push("/new-account");},
+          ),
+
         ],
       ),
     );
