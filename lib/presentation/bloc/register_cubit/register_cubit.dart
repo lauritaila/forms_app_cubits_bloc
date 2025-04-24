@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:forms_app_cubits_bloc/infrastructure/inputs/inputs.dart';
+import 'package:formz/formz.dart';
 
 part 'register_state.dart';
 
@@ -14,12 +16,17 @@ class RegisterCubit extends Cubit<RegisterFormState> {
     emit(state.copyWith(email: email));
   }
 
-  void onUsernameChanged(String username) {
-    emit(state.copyWith(username: username));
+  void onUsernameChanged(String value) {
+    final username = Username.dirty(value);
+    emit(
+      state.copyWith(username: username, isValid: Formz.validate([username, state.password])),
+    );
   }
 
-  void onPasswordChanged(String password) {
-    emit(state.copyWith(password: password));
+  void onPasswordChanged(String value) {
+    final password = Password.dirty(value);
+    emit(
+      state.copyWith(password: password, isValid: Formz.validate([password, state.username])),
+    );
   }
-
 }
