@@ -9,6 +9,15 @@ class Password extends FormzInput<String, PasswordInputError> {
   // Call super.dirty to represent a modified form input.
   const Password.dirty(super.value) : super.dirty();
 
+    String? get errorMessage {
+    if(isValid || isPure) return null;
+
+    if (displayError == PasswordInputError.empty) return 'Username is required';
+    if (displayError == PasswordInputError.length) return 'Username must be at least 6 characters long';
+
+    return null;
+  }
+
   @override
   PasswordInputError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty)  PasswordInputError.empty;
