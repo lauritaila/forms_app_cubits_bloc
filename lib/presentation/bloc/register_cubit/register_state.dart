@@ -3,7 +3,7 @@ part of 'register_cubit.dart';
 enum FormStatus { invalid, valid, validating, posting }
 
 class RegisterFormState extends Equatable {
-  final String email;
+  final Email email;
   final Username username;
   final Password password;
   final FormStatus formStatus;
@@ -11,14 +11,14 @@ class RegisterFormState extends Equatable {
 
   const RegisterFormState( {
     this.formStatus = FormStatus.invalid,
-    this.email = '',
+    this.email = const Email.pure(),
     this.username = const Username.pure(),
     this.password = const Password.pure(),
     this.isValid = false
   });
 
   RegisterFormState copyWith({
-    String? email,
+    Email? email,
     Username? username,
     Password? password,
     FormStatus? formStatus,
