@@ -43,14 +43,15 @@ class _RegisterView extends StatelessWidget {
 }
 
 class _RegisterForm extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final registerCubit = context.watch<RegisterCubit>();
+    final username = registerCubit.state.username;
+    final password = registerCubit.state.password;
+  
 
     return Form(
-      key: _formKey,
       child: Column(
         children: [
           CustomTextFormField(
@@ -58,20 +59,8 @@ class _RegisterForm extends StatelessWidget {
             onChanged: (value) {
               if (value == null) return;
               registerCubit.onUsernameChanged(value);
-              _formKey.currentState?.validate();
             },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Username is required';
-              }
-              if (value.length < 6) {
-                return 'Username must be at least 6 characters';
-              }
-              if (value.trim().isEmpty) {
-                return 'Username must not contain only spaces';
-              }
-              return null;
-            },
+            errorMessage: username.errorMessage
           ),
           SizedBox(height: 10),
           CustomTextFormField(
@@ -79,7 +68,6 @@ class _RegisterForm extends StatelessWidget {
             onChanged: (value) {
               if (value == null) return;
               registerCubit.onEmailChanged(value);
-              _formKey.currentState?.validate();
             },
             validator: (value) {
               final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -102,27 +90,13 @@ class _RegisterForm extends StatelessWidget {
             onChanged: (value) {
               if (value == null) return;
               registerCubit.onPasswordChanged(value);
-              _formKey.currentState?.validate();
             },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Password is required';
-              }
-              if (value.length < 6) {
-                return 'Password must be at least 6 characters';
-              }
-              if (value.trim().isEmpty) {
-                return 'Password must not contain only spaces';
-              }
-              return null;
-            },
+            errorMessage: password.errorMessage
           ),
           SizedBox(height: 20),
           FilledButton.tonalIcon(
             onPressed: () {
-              if (_formKey.currentState?.validate() ?? false) {
                 registerCubit.onSubmit();
-              }
             },
             icon: const Icon(Icons.save_rounded),
             label: const Text("Register"),
